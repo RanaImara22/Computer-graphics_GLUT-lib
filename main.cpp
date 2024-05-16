@@ -1,9 +1,8 @@
-//#include <C:\\MinGW\\include\\GL/glut.h>
+// Replace the dirctory with your own
 #include <D:\\Programs\\MinGW\\MinGW\\include\\GL/glut.h>
 
-
 void init() {
-    glEnable(GL_DEPTH_TEST);//3D
+    glEnable(GL_DEPTH_TEST); //3D
     glClearColor(0.0f, 0.3f, 0.0f, 1.0f); //green
     glMatrixMode(GL_PROJECTION);
     gluPerspective(45.0f, 1.0f, 1.0f, 100.0f);
@@ -40,11 +39,8 @@ void handleKeyPress(unsigned char key, int x, int y) {
 void mouse(int button, int state, int x, int y) {
     if (button == GLUT_LEFT_BUTTON && state == GLUT_DOWN) {
         animationEnabled = true;
-//        glutPostRedisplay(); // Redraw the scene with updated camera position
-//        std::cout << "Left mouse button clicked" << std::endl;
     } else if (button == GLUT_RIGHT_BUTTON && state == GLUT_DOWN) {
         animationEnabled = false;
-//        std::cout << "Right mouse button clicked" << std::endl;
     }
 }
 
@@ -88,7 +84,7 @@ void drawDoor(float x, float y, float z, float angle) {
     glPushMatrix();
     glTranslatef(x, y, z); // Move to the door's position
     glTranslatef(-0.05f, 0.0f, 0.0f); // Adjust pivot point to the left edge
-    glRotatef(angle, 0.0f, 1.0f, 0.0f); // Rotate around the y-axis
+    glRotatef(-angle, 0.0f, 1.0f, 0.0f); // Rotate around the y-axis
     glTranslatef(0.05f, 0.0f, 0.0f); // Move back to the original position
     glScalef(0.1f, 0.2f, 0.01f); // Scale to make it look like a door
     glutSolidCube(1.0f); // Draw a solid cube for the door
@@ -98,8 +94,6 @@ void drawDoor(float x, float y, float z, float angle) {
     glColor3f(0.2f, 0.1f, 0.1f);
     glPushMatrix();
     glTranslatef(x, y, z);
-    glTranslatef(-0.05f, 0.0f, 0.0f);
-    glTranslatef(0.05f, 0.0f, 0.0f);
     glScalef(0.1f, 0.2f, 0);
     glutSolidCube(1.0f);
     glPopMatrix();
@@ -118,15 +112,14 @@ void drawWindow(float x, float y, float z, float angle) {
     // Draw Shadow for the window
     glColor3f(0.2f, 0.2f, 0.3f);
     glPushMatrix();
-    glTranslatef(x - 0.05f, y, z);
-    glTranslatef(0.05f, 0.0f, 0.0f);
+    glTranslatef(x, y, z);
     glScalef(0.1f, 0.1f, 0);
     glutSolidCube(1.0f);
     glPopMatrix();
 }
 
 void drawGround() {
-    glColor3f(0.6f, 0.6f, 0.6f); // Set the color of the ground to black
+    glColor3f(0.6f, 0.6f, 0.6f); // Set the color of the ground
     glPushMatrix();
     glTranslatef(0.0f, -0.05f, 0.0f); // Position the ground slightly below the building base
     glScalef(3.0f, 0.1f, 3.0f); // Scale to make it flat and wide
@@ -140,7 +133,7 @@ void drawBicycle() {
 
     // Draw the frame of the bicycle
     glPushMatrix();
-    glTranslatef(0.0f, 0.0f, 0.0f);
+    glTranslatef(bicycleX, 0.0f, 0.0f);
     glTranslatef(0.01f, 0.17f, 1.0f); // Position the bicycle frame
     glScalef(0.8f, 0.05f, 0.05f); // Scale to make it look like a frame
     glutSolidCube(0.5f); // Draw a solid cube for the frame
@@ -152,7 +145,7 @@ void drawBicycle() {
 
     // Draw the right wheel with rotation
     glPushMatrix();
-    glTranslatef(0.0f, 0.0f, 0.0f);
+    glTranslatef(bicycleX, 0.0f, 0.0f);
     glTranslatef(0.15f, 0.082f, 1.0f);
     glRotatef(rightWheelAngle, 0.0f, 1.0f, 0.0f); // Rotate the bicycle for steering
     glutSolidTorus(0.025f, 0.06f, 6, 20);
@@ -160,7 +153,7 @@ void drawBicycle() {
 
     // Draw the left wheel with rotation
     glPushMatrix();
-    glTranslatef(0.0f, 0.0f, 0.0f);
+    glTranslatef(bicycleX, 0.0f, 0.0f);
     glTranslatef(-0.15f, 0.082f, 1.0f);
     glRotatef(leftWheelAngle, 0.0f, 1.0f, 0.0f); // Rotate the bicycle for steering
     glutSolidTorus(0.025f, 0.06f, 6, 20);
@@ -170,16 +163,15 @@ void drawBicycle() {
     // Draw the handle of the bicycle
     glColor3f(0.22f, 0.18f, 0.13f);
     glPushMatrix();
-    glTranslatef(0.0f, 0.0f, 0.0f);
+    glTranslatef(bicycleX, 0.0f, 0.0f);
     glTranslatef(0.1f, 0.18f, 1.0); // Position the handle slightly higher to match the frame's new position
-    glRotatef(90.0f, 0.0f, 0.0f, 1.0f); // Rotate to make it look like a handle
-    glScalef(0.14f, 0.02f, 0.02f); // Scale to make it look like a handle
+    glScalef(0.02f, 0.14f, 0.02f); // Scale to make it look like a handle
     glutSolidCube(0.9f); // Draw a solid cube for the handle
     glPopMatrix();
 
     glColor3f(0, 0, 0);
     glPushMatrix();
-    glTranslatef(0.0f, 0.0f, 0.0f);
+    glTranslatef(bicycleX, 0.0f, 0.0f);
     glTranslatef(0.1f, 0.24f, 1.0f); // Position the handle slightly higher to match the frame's new position
     glScalef(0.02f, 0.02f, 0.1f); // Scale to make it look like a handle
     glutSolidCube(0.9f); // Draw a solid cube for the handle
@@ -188,7 +180,7 @@ void drawBicycle() {
     // Draw the seat of the bicycle
     glColor3f(0.16f, 0.20f, 0.27f);
     glPushMatrix();
-    glTranslatef(0.0f, 0.0f, 0.0f);
+    glTranslatef(bicycleX, 0.0f, 0.0f);
     glTranslatef(-0.15f, 0.2f, 1.0f); // Position the seat slightly higher to match the frame's new position
     glScalef(0.15f, 0.04f, 0.07f); // Scale to make it look like a seat
     glutSolidCube(1.0f); // Draw a solid cube for the seat
@@ -251,7 +243,7 @@ void drawBuilding() {
     glEnd();
 
     // Draw the door
-    drawDoor(-0.01f, 0.1f, 0.26f, -doorAngle);
+    drawDoor(-0.01f, 0.1f, 0.26f, doorAngle);
 
     // Draw two windows on the first floor
     for (int i = 0; i < 2; ++i) {
@@ -347,7 +339,6 @@ void specialKeyPress(int key, int x, int y) {
         case GLUT_KEY_DOWN:
             updateCameraPosition(cameraPosX, cameraPosY - 0.1f, cameraPosZ);
             break;
-            // Add more controls as needed
     }
     glutPostRedisplay();
 }
@@ -360,14 +351,16 @@ int main(int argc, char** argv) {
     init();
     // keyboard callback
     glutKeyboardFunc(keyPress);
-    // mouse callback
 
+    // mouse callback
     glutMouseFunc(mouse);
+
     glutTimerFunc(20, update, 0);
+
     // Set up the display and reshape callbacks
     glutDisplayFunc(display);
-
     glutReshapeFunc(reshape);
+
     //specialKeyPress callback
     glutSpecialFunc(specialKeyPress);
     glutMainLoop();
